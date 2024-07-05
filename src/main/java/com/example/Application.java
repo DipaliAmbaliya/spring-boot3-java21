@@ -31,7 +31,7 @@ public class Application {
 
 			List<Post> posts = Observation
 					.createNotStarted("json-place-holder.load-posts", observationRegistry)
-					.lowCardinalityKeyValue("some-value", "100")
+					.lowCardinalityKeyValue("some-value", "10")
 					.observe(jps::loadPosts);
 
 			Observation

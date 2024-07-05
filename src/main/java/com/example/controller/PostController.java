@@ -3,6 +3,8 @@ package com.example.controller;
 import com.example.exception.PostNotFoundException;
 import com.example.model.Post;
 import com.example.repository.PostRepository;
+import com.example.service.PostService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +18,11 @@ public class PostController {
 
     private final PostRepository postRepository;
 
-    public PostController(PostRepository postRepository) {
+    private final PostService postService;
+
+    public PostController(PostRepository postRepository, PostService postService) {
         this.postRepository = postRepository;
+        this.postService = postService;
     }
 
     @GetMapping
@@ -29,5 +34,9 @@ public class PostController {
     public Post findById(@PathVariable Integer id) {
         return postRepository.findById(id).orElseThrow(() -> new PostNotFoundException(id));
     }
-
+    //Load Posts by restTemplate
+    @GetMapping("/loadPosts")
+    public List<Post> findByLoadPosts() {
+        return postService.loadPosts();
+    }
 }

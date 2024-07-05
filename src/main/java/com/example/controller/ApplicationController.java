@@ -20,14 +20,10 @@ import java.util.stream.Collectors;
 @RequestMapping("api/v1/")
 public class ApplicationController {
 
-    @Value("${spring.application.name}")
-    private String applicationName;
-
     private final Logger LOGGER = LoggerFactory.getLogger(ApplicationController.class);
 
     @GetMapping(path = "hello")
     public String getValue(){
-        visitCounter.increment();
         LOGGER.info("Thread Info: {}", Thread.currentThread());
         String response  = String.valueOf(Thread.currentThread().isVirtual());
         LOGGER.info("Response: {}", response);
@@ -37,12 +33,12 @@ public class ApplicationController {
 
     public ApplicationController(MeterRegistry registry) {
         visitCounter = Counter.builder("visit_counter")
-                .description("Number of visits to the Hello")
+                .description("Number of visits to the unmodifiableSet")
                 .register(registry);
     }
     @GetMapping("/unmodifiableSet")
     Collection<User> unmodifiableSet() {
-
+        visitCounter.increment();
         Collection<User> customers = Set.of(new User(1, "A"), new User(2, "B"), new User(3, "C"));
         return Collections
                 .unmodifiableSet(customers.stream().collect(Collectors.toSet()));

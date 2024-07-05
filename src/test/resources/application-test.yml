@@ -1,0 +1,9 @@
+server.ssl.bundle: "demo"
+server.port: 8443
+
+spring:
+  application:
+    name: springboot-java21
+  threads:
+    virtual:
+      enabled: true
