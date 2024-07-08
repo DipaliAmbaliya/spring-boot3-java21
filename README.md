@@ -56,8 +56,6 @@
 - Problem Details for HTTP APIs
     - A common requirement for REST services is to include details in the body of error responses. The Spring Framework supports the "Problem Details for HTTP APIs" specification
     - check ExceptionHandlerAdvice.java
-- Zipkin
-  - A new JDK HttpClient based Zipkin sender has been implemented. This sender only depends on the JDK and will be the default sender in Spring Boot 3, superseding the WebClient and RestTemplate sender implementations.
 - Miscellaneous 
   - ListCrudRepository 
   - PagingAndSortingRepository no longer extends CrudRepository 
@@ -68,7 +66,6 @@
 
 ### **Code**
 - Virtual Threads
-- UnmodifiableSet
 
 ### **TestCases**
 
