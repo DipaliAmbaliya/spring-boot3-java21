@@ -47,8 +47,6 @@ public class Application {
 					.observationHandler(meterObservationHandler)
 					.observationHandler(loggingObservationHandler);
 			// make an observation
-			Observation.Context context = new Observation.Context();
-
 			List<Post> posts = Observation
 					.createNotStarted("json-place-holder.load-posts", observationRegistry)
 					.lowCardinalityKeyValue("some-value", "100")

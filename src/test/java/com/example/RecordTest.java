@@ -9,7 +9,7 @@ public class RecordTest {
     @Test
     void records() throws Exception {
         var event = new User(1,"Test");
-        Assertions.assertEquals( event.name() , "Test");
+        Assertions.assertEquals("Test",event.name());
         System.out.println(event);
     }
 }

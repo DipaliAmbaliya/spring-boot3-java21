@@ -17,8 +17,8 @@ class SequencedCollectionTest {
             sequencedCollection.add("D");
             sequencedCollection.add("E");
             sequencedCollection.add("F");
-            sequencedCollection.addFirst("A"); //<1>
-            Assertions.assertEquals(sequencedCollection.getFirst(), "A"); // ②
+            sequencedCollection.addFirst("A");
+            Assertions.assertEquals("A",sequencedCollection.getFirst());
         }
     }
 }

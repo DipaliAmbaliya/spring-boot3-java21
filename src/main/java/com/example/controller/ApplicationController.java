@@ -34,6 +34,7 @@ public class ApplicationController {
             TimeUnit.MILLISECONDS.sleep(SLEEP_TIME);
         } catch (InterruptedException e) {
             LOGGER.error(e.getMessage());
+            Thread.currentThread().interrupt();
         }
         String response  = String.valueOf(Thread.currentThread().isVirtual());
         LOGGER.info("Response: {}", response);

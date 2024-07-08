@@ -12,13 +12,12 @@ public class FutureTest {
                 .newFixedThreadPool(Runtime.getRuntime().availableProcessors())) {
             var future = executor.submit(() -> "hello, world!");
             Thread.sleep(100);
-            // ①
             var result = switch (future.state()) {
                 case CANCELLED, FAILED -> throw new IllegalStateException("couldn't finish the work!");
                 case SUCCESS -> future.resultNow();
                 default -> null;
             };
-            Assertions.assertEquals(result, "hello, world!");
+            Assertions.assertEquals( "hello, world!",result);
         }
     }
 }
