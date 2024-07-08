@@ -15,6 +15,10 @@ spring:
         private-key: "certs/demo.key"
   banner:
     location: classpath:banner.txt
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
 management:
   endpoints:
     web:
@@ -25,17 +29,12 @@ management:
       show-details: always
     env:
       show-values: always
-    prometheus:
-      enabled: true
   tracing:
     sampling:
       probability: 1.0
   metrics:
     tags:
       application: ${spring.application.name}
-    export:
-      prometheus:
-        enabled: true
 
 logging:
   level:

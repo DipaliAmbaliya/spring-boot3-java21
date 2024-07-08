@@ -1,6 +1,7 @@
 package com.example.service;
 
 import com.example.model.Post;
+import io.micrometer.observation.annotation.Observed;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
+@Observed(name = "postService")
 @Service
 public class PostService {
 

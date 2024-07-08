@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @RestController
@@ -21,14 +23,7 @@ import java.util.stream.Collectors;
 public class ApplicationController {
 
     private final Logger LOGGER = LoggerFactory.getLogger(ApplicationController.class);
-
-    @GetMapping(path = "hello")
-    public String getValue(){
-        LOGGER.info("Thread Info: {}", Thread.currentThread());
-        String response  = String.valueOf(Thread.currentThread().isVirtual());
-        LOGGER.info("Response: {}", response);
-        return response;
-    }
+    private static final int SLEEP_TIME = 100;
     Counter visitCounter;
 
     public ApplicationController(MeterRegistry registry) {
@@ -36,16 +31,18 @@ public class ApplicationController {
                 .description("Number of visits to the unmodifiableSet")
                 .register(registry);
     }
-    @GetMapping("/unmodifiableSet")
-    Collection<User> unmodifiableSet() {
+
+    @GetMapping(path = "/isVirtual")
+    public ResponseEntity<String> isVirtual(){
         visitCounter.increment();
-        Collection<User> customers = Set.of(new User(1, "A"), new User(2, "B"), new User(3, "C"));
-        return Collections
-                .unmodifiableSet(customers.stream().collect(Collectors.toSet()));
-
-    }
-
-    record User(Integer id, String name) {
+        try {
+            TimeUnit.MILLISECONDS.sleep(SLEEP_TIME);
+        } catch (InterruptedException e) {
+            LOGGER.error(e.getMessage());
+        }
+        String response  = String.valueOf(Thread.currentThread().isVirtual());
+        LOGGER.info("Response: {}", response);
+        return ResponseEntity.ok(response);
     }
 
 }

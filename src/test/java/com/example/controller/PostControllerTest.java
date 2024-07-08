@@ -30,11 +30,11 @@ public class PostControllerTest {
 
 
     @Test
-    void findAll() {
+    void findAllTest() {
 
         List<Post> expected = List.of(new Post(1, 1,"A","null"), new Post(2, 2,"B","null"), new Post(3,3, "C","null"));
         when(postRepository.findAll()).thenReturn(List.of(new Post(1, 1,"A","null"), new Post(2, 2,"B","null"), new Post(3,3, "C","null")));
-        List<Post> posts = controller.findAll();
+        List<Post> posts = controller.findAll().getBody();
         assertEquals(expected.size(),posts.size());
 
 
@@ -43,7 +43,7 @@ public class PostControllerTest {
     @Test
     void findByIdPositive() {
         when(postRepository.findById(1)).thenReturn(Optional.of(new Post()));
-        Post post = controller.findById(1);
+        Post post = controller.findById(1).getBody();
         assertNotNull(post);
     }
 
@@ -56,10 +56,10 @@ public class PostControllerTest {
     }
 
     @Test
-    void loadPosts() {
+    void loadPostsTest() {
         List<Post> expected = List.of(new Post(1, 1,"A","null"), new Post(2, 2,"B","null"), new Post(3,3, "C","null"));
         when(postService.loadPosts()).thenReturn(List.of(new Post(1, 1,"A","null"), new Post(2, 2,"B","null"), new Post(3,3, "C","null")));
-        List<Post> posts = controller.findByLoadPosts();
+        List<Post> posts = controller.findByLoadPosts().getBody();
         assertEquals(expected.size(),posts.size());
 
     }
