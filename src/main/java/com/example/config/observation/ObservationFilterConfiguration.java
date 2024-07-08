@@ -1,4 +1,4 @@
-package com.example.config.Observation;
+package com.example.config.observation;
 
 import io.micrometer.observation.ObservationRegistry;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;

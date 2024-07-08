@@ -1,4 +1,4 @@
-package com.example.config.Observation;
+package com.example.config.observation;
 
 import io.micrometer.observation.ObservationHandler;
 import org.slf4j.Logger;

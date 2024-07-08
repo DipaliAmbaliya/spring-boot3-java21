@@ -1,4 +1,4 @@
-package com.example.config.webConfig;
+package com.example.config.webconfig;
 
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;

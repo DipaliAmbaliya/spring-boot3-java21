@@ -1,4 +1,4 @@
-package com.example.config.virtualThread;
+package com.example.config.virtualthread;
 
 import org.springframework.boot.web.embedded.tomcat.TomcatProtocolHandlerCustomizer;
 import org.springframework.context.annotation.Bean;
