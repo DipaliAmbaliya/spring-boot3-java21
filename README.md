@@ -10,6 +10,9 @@
   - **Configuration beans**
     - **ApplicationTaskExecutor**, replaces the standard ApplicationTaskExecutor. In short, we want to override the default Executor so it starts a new virtual thread for each task. 
     - **ProtocolHandlerVirtualThreadExecutorCustomizer**, customizes the standard TomcatProtocolHandler in the same way.
+- Using Records with Spring Data JPA
+  - It enables us to use records with Spring Data JPA repositories
+  - Automatic Mapping from Entity to Record
 - Spring MVC and WebFlux URL Matching Changes
   - the trailing slash matching configuration option has been deprecated and its default value set to false. We can change the default with global Spring MVC configuration
   - **Configuration beans**
@@ -56,6 +59,9 @@
 - Problem Details for HTTP APIs
     - A common requirement for REST services is to include details in the body of error responses. The Spring Framework supports the "Problem Details for HTTP APIs" specification
     - check ExceptionHandlerAdvice.java
+- Spring Boot 3 With Docker Compose Application
+  - **spring-boot-docker-compose** dependency spins up all the services in the docker-compose.yml file.
+  - **spring.docker.compose.enabled** and **spring.docker.compose.enabled.file** add this in an application-{profile} properties or YAML file
 - Miscellaneous 
   - ListCrudRepository 
   - PagingAndSortingRepository no longer extends CrudRepository 

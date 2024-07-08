@@ -8,6 +8,7 @@ import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
 import io.micrometer.observation.Observation;
 import io.micrometer.observation.ObservationRegistry;
 import io.micrometer.observation.ObservationTextPublisher;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -21,6 +22,7 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 import java.util.List;
 
 @SpringBootApplication
+@Slf4j
 public class Application {
 
 	public static void main(String[] args) {
@@ -38,7 +40,7 @@ public class Application {
 			final var meterRegistry = new SimpleMeterRegistry();
 			final var meterObservationHandler = new DefaultMeterObservationHandler(meterRegistry);
 			// create simple logging observation handler
-			final var loggingObservationHandler = new ObservationTextPublisher(System.out::println);
+			final var loggingObservationHandler = new ObservationTextPublisher(log::info);
 			// register observation handlers
 			observationRegistry
 					.observationConfig()

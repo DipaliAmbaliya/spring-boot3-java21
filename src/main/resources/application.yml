@@ -19,6 +19,11 @@ spring:
     multipart:
       max-file-size: 50MB
       max-request-size: 50MB
+  docker:
+    compose:
+      enabled: true
+      file: docker-compose.yml
+
 management:
   endpoints:
     web:

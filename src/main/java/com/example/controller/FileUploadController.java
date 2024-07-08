@@ -2,6 +2,8 @@ package com.example.controller;
 
 import com.example.model.FileUploadCommand;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferUtils;
@@ -35,14 +37,15 @@ import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
-@Slf4j
 @SuppressWarnings("unused")
 public class FileUploadController {
+
+  private final Logger LOGGER = LoggerFactory.getLogger(FileUploadController.class);
 
   @PostMapping(value = "simple-form-upload", consumes = MULTIPART_FORM_DATA_VALUE)
   public ResponseEntity<Map<String, String>> handleFileUploadForm(FileUploadCommand form) {
 
-    log.info("uploading form data: {}", form);
+    LOGGER.info("uploading form data: {}", form);
 
     var result = Map.of(
         "name", form.getName(),

@@ -49,10 +49,8 @@ public class PostControllerTest {
 
     @Test
     void findByIdNagative() {
-        when(postRepository.findById(101)).thenThrow( new PostNotFoundException(101));
+        when(postRepository.findById(101)).thenThrow( new PostNotFoundException("101"));
         assertThrows(PostNotFoundException.class, ()-> controller.findById(101),"Post not found!");
-
-
     }
 
     @Test
