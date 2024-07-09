@@ -1,15 +1,13 @@
 package com.example;
 
+import com.example.config.observation.SimpleLoggingHandler;
 import com.example.model.Post;
 import com.example.repository.PostRepository;
 import com.example.service.JsonPlaceholderService;
-import io.micrometer.core.instrument.observation.DefaultMeterObservationHandler;
-import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
 import io.micrometer.observation.Observation;
 import io.micrometer.observation.ObservationRegistry;
 import io.micrometer.observation.ObservationTextPublisher;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -36,16 +34,11 @@ public class Application {
 			HttpServiceProxyFactory factory = HttpServiceProxyFactory.builder().exchangeAdapter(WebClientAdapter.create(client)).build();
 			JsonPlaceholderService jps = factory.createClient(JsonPlaceholderService.class);
 
-			// create meter registry and observation handler
-			final var meterRegistry = new SimpleMeterRegistry();
-			final var meterObservationHandler = new DefaultMeterObservationHandler(meterRegistry);
-			// create simple logging observation handler
-			final var loggingObservationHandler = new ObservationTextPublisher(log::info);
-			// register observation handlers
+			// register observation handlers and simpleLoggingObservation handler
 			observationRegistry
 					.observationConfig()
-					.observationHandler(meterObservationHandler)
-					.observationHandler(loggingObservationHandler);
+					.observationHandler(new SimpleLoggingHandler())
+					.observationHandler(new ObservationTextPublisher(log::info));
 			// make an observation
 			List<Post> posts = Observation
 					.createNotStarted("json-place-holder.load-posts", observationRegistry)
