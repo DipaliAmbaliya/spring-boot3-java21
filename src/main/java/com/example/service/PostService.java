@@ -7,8 +7,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
 
@@ -18,11 +18,11 @@ public class PostService {
 
     private final RestTemplate restTemplate;
 
-    private final RestClient restClient;
+    private final WebClient webClient;
 
-    public PostService(RestTemplate restTemplate, RestClient restClient) {
+    public PostService(RestTemplate restTemplate, WebClient webClient) {
         this.restTemplate = restTemplate;
-        this.restClient = restClient;
+        this.webClient = webClient;
     }
 
     //use restTemplate
@@ -31,13 +31,12 @@ public class PostService {
         return exchange.getBody();
     }
 
-    //use restClient
+    //use webClient
     public List<Post> postsByClient() {
-       return restClient.get()
+       return webClient.get()
                 .uri("https://jsonplaceholder.typicode.com/posts")
                 .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .body(List.class);
+                .retrieve().bodyToMono(List.class).block();
     }
 }
 

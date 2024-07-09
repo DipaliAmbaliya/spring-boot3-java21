@@ -47,15 +47,12 @@
   - **Configuration beans**
     - **WebFluxConfigurer**,for configure webflux to implement WebFluxConfigurer
     - **WebFluxSecurityConfig**, to enable security config for webflux
+    - **WebClient**,supports synchronous HTTP access, but it required an additional dependency spring-boot-starter-webflux.
 - Http Interfaces
     - The Spring Framework lets you define an HTTP service as a Java interface with annotated methods for HTTP exchanges. You can then generate a proxy that implements this interface and performs the exchanges. This helps to simplify HTTP remote access which often involves a facade that wraps the details of using the underlying HTTP client.
       Prior to Spring Boot 3 for use the RestTemplate or WebClient to construct call.In Spring Boot 3 you can declare an interface with the methods you would like to support.Next, create a proxy that will perform the declared HTTP exchanges.
     - **Configuration beans**
-      - **CloseableHttpClient**,CloseableHttpClient is an abstract class that represents a base implementation of the HttpClient interface. However, it also implements the Closeable interface.
-      - **PoolingConnectionManager**,Supports both HTTP and HTTPS - Uses a connection pool to re-use connections and save overhead of creating connections.
-      - **WebClient**,supports synchronous HTTP access, but it required an additional dependency spring-boot-starter-webflux.
-      - **RestClient**, in Spring boot 3 the RestClient offers a more modern API for synchronous HTTP access.
-      - **HttpComponentsClientHttpRequestFactory**,Create a new instance of the HttpComponentsClientHttpRequestFactory with a default HttpClient based on system properties.
+      - The **HttpServiceProxyFactory** is a factory to create a client proxy from an HTTP service interface. Use its HttpServiceProxyFactory.builder(client).build() method to get an instance of the proxy bean.
 - Problem Details for HTTP APIs
     - A common requirement for REST services is to include details in the body of error responses. The Spring Framework supports the "Problem Details for HTTP APIs" specification
     - check ExceptionHandlerAdvice.java

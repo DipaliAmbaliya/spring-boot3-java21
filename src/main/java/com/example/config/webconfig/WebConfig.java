@@ -1,44 +1,36 @@
 package com.example.config.webconfig;
 
-import org.apache.hc.client5.http.impl.async.CloseableHttpAsyncClient;
-import org.apache.hc.client5.http.impl.async.HttpAsyncClientBuilder;
-import org.apache.hc.client5.http.impl.async.HttpAsyncClients;
-import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.service.JsonPlaceholderService;
+import lombok.SneakyThrows;
+import org.springframework.boot.autoconfigure.web.reactive.function.client.WebClientSsl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
-import org.springframework.http.client.reactive.ClientHttpConnector;
-import org.springframework.http.client.reactive.HttpComponentsClientHttpConnector;
-import org.springframework.web.client.RestClient;
+import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.support.WebClientAdapter;
+import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
 @Configuration
 public class WebConfig {
 
-  @Autowired
-  CloseableHttpClient httpClient;
-
   @Bean
-  public WebClient webClient() {
-    HttpAsyncClientBuilder clientBuilder = HttpAsyncClients.custom();
-    CloseableHttpAsyncClient client = clientBuilder.build();
-    ClientHttpConnector connector = new HttpComponentsClientHttpConnector(client);
-    return WebClient.builder().clientConnector(connector).build();
-  }
-
-  @Bean
-  RestClient restClient() {
-    return RestClient.builder()
-            .baseUrl("https://jsonplaceholder.typicode.com")
-            .requestFactory(clientHttpRequestFactory())
+  WebClient webClient(WebClientSsl ssl) {
+    return WebClient.builder()
+            .exchangeStrategies(ExchangeStrategies.builder().codecs(c ->
+                    c.defaultCodecs().enableLoggingRequestDetails(true)).build()
+            )
+            .baseUrl("https://jsonplaceholder.typicode.com/").apply(ssl.fromBundle("demo"))
             .build();
+
   }
 
+  @SneakyThrows
   @Bean
-  public HttpComponentsClientHttpRequestFactory clientHttpRequestFactory() {
-    HttpComponentsClientHttpRequestFactory clientHttpRequestFactory = new HttpComponentsClientHttpRequestFactory();
-    clientHttpRequestFactory.setHttpClient(httpClient);
-    return clientHttpRequestFactory;
+  JsonPlaceholderService postClient(WebClient webClient) {
+    HttpServiceProxyFactory httpServiceProxyFactory =
+            HttpServiceProxyFactory.builderFor(WebClientAdapter.create(webClient))
+                    .build();
+    return httpServiceProxyFactory.createClient(JsonPlaceholderService.class);
   }
+
 }
