@@ -21,7 +21,7 @@ public class SecurityConfig {
 
         return http
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/").authenticated();
+                    auth.requestMatchers("/api/posts/*").authenticated();
                     auth.anyRequest().permitAll();
                 })
                 .httpBasic(withDefaults())

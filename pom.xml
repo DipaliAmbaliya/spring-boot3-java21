@@ -15,6 +15,7 @@
 	<description>Demo project for Spring Boot and Java21</description>
 	<properties>
 		<java.version>21</java.version>
+		<native.maven.plugin.version>0.9.17</native.maven.plugin.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -119,6 +120,15 @@
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.graalvm.buildtools</groupId>
+				<artifactId>native-maven-plugin</artifactId>
+				<version>${native.maven.plugin.version}</version>
+				<configuration>
+					<!-- Mockito is not supported -->
+					<skipNativeTests>true</skipNativeTests>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

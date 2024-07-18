@@ -19,17 +19,9 @@ public class ApplicationController {
     private final Logger LOGGER = LoggerFactory.getLogger(ApplicationController.class);
 
     private static final int SLEEP_TIME = 100;
-    Counter visitCounter;
-
-    public ApplicationController(MeterRegistry registry) {
-        visitCounter = Counter.builder("visit_counter")
-                .description("Number of visits to the unmodifiableSet")
-                .register(registry);
-    }
 
     @GetMapping(path = "/isVirtual")
     public ResponseEntity<String> isVirtual(){
-        visitCounter.increment();
         try {
             TimeUnit.MILLISECONDS.sleep(SLEEP_TIME);
         } catch (InterruptedException e) {

@@ -29,7 +29,7 @@ public class Application {
 	}
 
 	@Bean
-	CommandLineRunner commandLineRunner(PostRepository postRepository, ObservationRegistry observationRegistry, WebClientSsl ssl) {
+	CommandLineRunner commandLineRunner(PostRepository postRepository, ObservationRegistry observationRegistry) {
 		return args -> {
 			// register observation handlers and simpleLoggingObservation handler
 			observationRegistry
